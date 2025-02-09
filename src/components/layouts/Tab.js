@@ -1,6 +1,6 @@
 import React from "react";
 
-const Tab = ({ onClick, children }) => {
+const Tab = ({ alt, onClick, children, selected }) => {
   return (
     <div>
       <input
@@ -12,7 +12,7 @@ const Tab = ({ onClick, children }) => {
       <label
         htmlFor={`tab${children}`}
         onClick={onClick}
-        className="rounded-md px-2 py-3 text-center text-sm font-semibold ring-1 ring-inset ring-teal-700 text-teal-700 transition-all ease-in-out hover:text-white hover:bg-teal-700 hover:ring-teal-800 select-none cursor-pointer peer-checked:bg-teal-700 peer-checked:ring-teal-800 peer-checked:text-white"
+        className={`rounded-md px-2 py-3 text-center text-sm font-semibold ring-1 ring-inset  ring-teal-700 text-teal-700 transition-all ease-in-out ${alt ? "bg-teal-600 text-gray-100" : ""} hover:text-white hover:bg-orange-400 hover:ring-orange-600 select-none cursor-pointer ${selected ? "!bg-orange-400 !ring-orange-600 !text-white" : ""} `}
       >
         {children}
       </label>

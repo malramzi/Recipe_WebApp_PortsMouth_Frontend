@@ -13,22 +13,6 @@ export default function RecipeCreate(props) {
   const [desc, setDesc] = useState("");
   const [formData,setFormData] = useState( props.editMode ? props.recipe : {})
 
-  // const handleFormSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   const formData = new FormData();
-
-  //   formData.append("category.name", category);
-  //   formData.append("picture", picture, picture.name);
-  //   formData.append("title", title);
-  //   formData.append("desc", desc);
-  //   formData.append("cook_time", cook_time);
-  //   formData.append("ingredients", JSON.stringify(ingredients));
-  //   formData.append("procedure", JSON.stringify(procedures));
-
-  //   props.handleFormSubmit(formData);
-  // };
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
     props.handleFormSubmit(formData);

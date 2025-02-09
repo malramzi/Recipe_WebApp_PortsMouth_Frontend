@@ -26,7 +26,7 @@ export default function MyRecipes() {
           <h2 className="text-lg leading-6 font-medium text-gray-900">
             My Recipes
           </h2>
-          <RecipeCard recipes={recipes} quickview={false} />
+          <RecipeCard alt recipes={recipes} quickview={false} />
         </div>
       </div>
     </>

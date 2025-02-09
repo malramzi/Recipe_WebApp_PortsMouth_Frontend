@@ -4,7 +4,7 @@ import { RadioGroup } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 
 import { addCategory } from "../../../redux/actions/forms";
-import { categories } from "../../../utils/dummyData";
+import { useCategoryStore } from "../../../zustand/useCategoryStore";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -12,6 +12,7 @@ function classNames(...classes) {
 
 export default function Category({ editMode, recipe, handleFormChange }) {
   const [selectedcategories, setSelectedcategories] = useState(editMode && recipe.category || {});
+  const {categories} = useCategoryStore()
 
 
   return (
@@ -54,7 +55,7 @@ export default function Category({ editMode, recipe, handleFormChange }) {
                       as="span"
                       className="mt-6 text-sm font-medium"
                     >
-                      {category.users}
+                      {category.users || "0 recipes"}
                     </RadioGroup.Description>
                   </div>
                 </div>

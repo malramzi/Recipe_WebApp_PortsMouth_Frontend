@@ -1,10 +1,85 @@
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
-
+import bannerImg1 from "../assets/1.png";
+import food1 from "../assets/f1.jpg";
+import food2 from "../assets/f2.jpg";
+import food3 from "../assets/f3.jpg";
+import food4 from "../assets/f4.jpg";
+import { BookmarkIcon, ClockIcon, HeartIcon } from "@heroicons/react/outline";
 export default function Landing() {
   return (
     <>
-      <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+      <div
+        style={{
+          backgroundImage:
+            "linear-gradient(45deg,#00000f70,#0d9488f3),url('https://img.freepik.com/premium-photo/protein-vegetarians-tofu-vegetables-nuts-seeds-legumes-top-view-black-background-concept-healthy-clean-food-copy-space_152520-2085.jpg')",
+        }}
+        className="h-[calc(80vh-80px)] bg-no-repeat bg-cover rounded-b-md shadow-md "
+      >
+        <div className="mx-auto grid grid-cols-3 items-center h-full max-w-[80vw]">
+          <div className="col-span-2 text-white p-4 flex flex-col gap-4 [&_*]:transition-all [&_*]:ease-in-out">
+            <h1 className="text-7xl font-bold">
+              NEED SOMETHING FOR DINNER TONIGHT?
+            </h1>
+            <p className="text-2xl font-bold p-1 flex flex-col gap-3 hover:ml-5">
+              Find it Here{" "}
+              <div>
+                <Link
+                  to="/recipe"
+                  className="inline-block px-5 py-3 mb-4 text-xs font-semibold tracking-wider ring-1 text-white bg-teal-600 ring-gray-100 hover:text-teal-600 uppercase rounded-full hover:bg-white hover:ring-teal-600"
+                >
+                  Explore
+                </Link>
+              </div>
+            </p>
+          </div>
+          <img
+            src={bannerImg1}
+            className="col-span-1 h-[400px] animate-[spin_9s_linear_infinite] hover:animate-none"
+          />
+        </div>
+      </div>
+
+      <section className="bg-orange-100 ">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-8">
+            <div className="space-y-5 sm:space-y-4">
+              <h2 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                Food has a huge impact on our lives and society
+              </h2>
+              <p className="text-xl text-gray-500">
+                Food blogs are more than just a way to share recipes and cooking
+                techniques. They have a profound impact on our culture, our
+                environment and our health.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2">
+              <img
+                src={food1}
+                alt="food1"
+                className="h-56 w-full object-cover rounded-lg"
+              />
+              <img
+                src={food2}
+                alt="food2"
+                className="h-56 w-full object-cover rounded-lg"
+              />
+              <img
+                src={food3}
+                alt="food3"
+                className="h-56 w-full object-cover rounded-lg"
+              />
+              <img
+                src={food4}
+                alt="food4"
+                className="h-56 w-full object-cover rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 bg-teal-50 rounded-lg m-1 ring-1 ring-orange-100">
         <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
           <div>
             <Link
@@ -146,6 +221,141 @@ export default function Landing() {
           </div>
         </div>
       </div>
+      <section className="bg-orange-300">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+          <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            <span className="block">Explore the world of recipes</span>
+          </h2>
+          <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+            <div className="inline-flex rounded-md shadow">
+              <Link
+                to="/recipes"
+                className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700"
+              >
+                Get Started
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-teal-50">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="flex flex-col">
+              <div className="flex items-center">
+                <ClockIcon
+                  className="flex-shrink-0 h-6 w-6 text-gray-400"
+                  aria-hidden="true"
+                />
+                <h3 className="ml-3 text-lg font-medium text-gray-900">
+                  Time-saving recipes
+                </h3>
+              </div>
+              <p className="mt-2 text-sm text-gray-600">
+                Our recipes are designed to be quick and easy to make, so you
+                can spend more time enjoying your meal and less time in the
+                kitchen.
+              </p>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex items-center">
+                <HeartIcon
+                  className="flex-shrink-0 h-6 w-6 text-gray-400"
+                  aria-hidden="true"
+                />
+                <h3 className="ml-3 text-lg font-medium text-gray-900">
+                  Healthy recipes
+                </h3>
+              </div>
+              <p className="mt-2 text-sm text-gray-600">
+                We believe that healthy food should be delicious and accessible
+                to everyone. Our recipes are designed to be nutritious and easy
+                to make.
+              </p>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex items-center">
+                <BookmarkIcon
+                  className="flex-shrink-0 h-6 w-6 text-gray-400"
+                  aria-hidden="true"
+                />
+                <h3 className="ml-3 text-lg font-medium text-gray-900">
+                  Save your favorite recipes
+                </h3>
+              </div>
+              <p className="mt-2 text-sm text-gray-600">
+                Create an account to save your favorite recipes and access them
+                from anywhere.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="bg-orange-100">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="flex flex-col">
+              <div className="flex items-center">
+                <svg
+                  className="flex-shrink-0 h-6 w-6 text-gray-400"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M10 2a8 8 0 00-8 8 8 8 0 0016 0 8 8 0 00-8-8zm0 14a6 6 0 110-12 6 6 0 010 12z" />
+                </svg>
+                <h3 className="ml-3 text-lg font-medium text-gray-900">
+                  International Recipes
+                </h3>
+              </div>
+              <p className="mt-2 text-sm text-gray-600">
+                Discover a diverse range of international recipes that will take
+                your taste buds on a culinary journey around the world.
+              </p>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex items-center">
+                <svg
+                  className="flex-shrink-0 h-6 w-6 text-gray-400"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M10 2a8 8 0 00-8 8 8 8 0 0016 0 8 8 0 00-8-8zm0 14a6 6 0 110-12 6 6 0 010 12z" />
+                </svg>
+                <h3 className="ml-3 text-lg font-medium text-gray-900">
+                  Vegan Recipes
+                </h3>
+              </div>
+              <p className="mt-2 text-sm text-gray-600">
+                Our collection of vegan recipes ensures that you can enjoy
+                delicious meals without compromising on flavor or nutrition.
+              </p>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex items-center">
+                <svg
+                  className="flex-shrink-0 h-6 w-6 text-gray-400"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M10 2a8 8 0 00-8 8 8 8 0 0016 0 8 8 0 00-8-8zm0 14a6 6 0 110-12 6 6 0 010 12z" />
+                </svg>
+                <h3 className="ml-3 text-lg font-medium text-gray-900">
+                  Dessert Recipes
+                </h3>
+              </div>
+              <p className="mt-2 text-sm text-gray-600">
+                Indulge in our sweet and delightful dessert recipes, perfect for
+                satisfying your sweet tooth and impressing your guests.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </>
   );

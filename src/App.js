@@ -17,6 +17,9 @@ import SavedRecipes from "./components/recipe/SavedRecipes";
 
 import ErrorDiv from "./components/layouts/ErrorDiv";
 import SearchRecipes from "./components/recipe/SearchRecipes";
+import CategoryForm from "./components/recipe/category_form/CategoryForm";
+import Categories from "./components/recipe/Categories";
+import CategoryCreate from "./components/recipe/CategoryCreate";
 
 export default function App() {
   return (
@@ -30,6 +33,7 @@ export default function App() {
         <Route exact path="/login" element={<Login />} />
 
         <Route exact path="/recipe" element={<Recipes />} />
+        
         <Route
           exact
           path="/recipe/:id"
@@ -57,6 +61,15 @@ export default function App() {
             </WithPrivateRoute>
           }
         />
+        <Route
+          exact
+          path="/recipe/categories/create"
+          element={
+            <WithPrivateRoute>
+              <CategoryCreate/>
+            </WithPrivateRoute>
+          }
+        />
 
         <Route
           path="dashboard"
@@ -66,6 +79,7 @@ export default function App() {
             </WithPrivateRoute>
           }
         >
+          <Route exact path="categories" element={<Categories />} />
           <Route path="profile" element={<Profile />} />
           <Route path="myRecipes" element={<MyRecipes />} />
           <Route path="savedRecipes" element={<SavedRecipes />} />

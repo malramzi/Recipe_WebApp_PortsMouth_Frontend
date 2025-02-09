@@ -21,6 +21,7 @@ const navigation = [
     to: "savedRecipes",
     current: false,
   },
+  { name: "My Food Categories", icon: MenuAlt1Icon, to: "categories", current: false },
 ];
 
 const secondaryNavigation = [{ name: "Logout", icon: LogoutIcon }];
@@ -32,10 +33,10 @@ function classNames(...classes) {
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const user = {
-    username : "John Doe",
-    email : "user@email.com"
-  }
-  const avatar = null
+    username: "John Doe",
+    email: "user@email.com",
+  };
+  const avatar = null;
 
   return (
     <>
@@ -66,7 +67,7 @@ export default function Dashboard() {
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-teal-700">
+              <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-teal-800">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-in-out duration-300"
@@ -91,8 +92,11 @@ export default function Dashboard() {
                   </div>
                 </Transition.Child>
                 <div className="px-4">
-                  <Link to="/" className="font-normal text-xl  text-teal-200">
-                    Recipe Blog
+                  <Link
+                    to="/"
+                    className="text-xl inline-flex font-bold text-teal-700"
+                  >
+                    <p className=" text-orange-400">Meal</p>Time
                   </Link>
                 </div>
                 <nav
@@ -106,7 +110,7 @@ export default function Dashboard() {
                         to={item.to}
                         className={classNames(
                           item.current
-                            ? "bg-teal-800 text-white"
+                            ? "bg-orange-500 text-white"
                             : "text-teal-100 hover:text-white hover:bg-teal-600",
                           "group flex items-center w-full px-2 py-2 text-sm leading-6 font-medium rounded-md"
                         )}
@@ -148,10 +152,13 @@ export default function Dashboard() {
         {/* Static sidebar for desktop */}
         <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex flex-col flex-grow bg-teal-700 pt-5 pb-4 overflow-y-auto">
+          <div className="flex flex-col flex-grow bg-teal-800 pt-5 pb-4 overflow-y-auto">
             <div className="px-4">
-              <Link to="/" className="font-normal text-xl  text-teal-200">
-               Recipe Blog
+              <Link
+                to="/"
+                className="text-xl inline-flex font-bold text-white"
+              >
+                <p className=" text-orange-400">Meal</p>Time
               </Link>
             </div>
             <nav
@@ -165,14 +172,14 @@ export default function Dashboard() {
                     to={item.to}
                     className={classNames(
                       item.current
-                        ? "bg-teal-800 text-white"
+                        ? "bg-orange-400 text-white"
                         : "text-teal-100 hover:text-white hover:bg-teal-600",
                       "group flex items-center w-full px-2 py-2 text-sm leading-6 font-medium rounded-md"
                     )}
                     aria-current={item.current ? "page" : undefined}
                   >
                     <item.icon
-                      className="mr-4 flex-shrink-0 h-6 w-6 text-teal-200"
+                      className={`mr-4 flex-shrink-0 h-6 w-6 ${item.current ?"text-white":"text-teal-200"}`}
                       aria-hidden="true"
                     />
                     {item.name}

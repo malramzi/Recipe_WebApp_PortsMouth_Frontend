@@ -48,8 +48,8 @@ export default function Header() {
               <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
                 <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
                   <div className="flex-shrink-0 flex items-center">
-                    <Link to="/" className="font-normal text-xl  text-teal-700">
-                      Recipe Blog
+                    <Link to="/" className="text-xl inline-flex font-bold text-teal-700">
+                      <p className=" text-orange-400">Meal</p>Time
                     </Link>
                   </div>
                 </div>

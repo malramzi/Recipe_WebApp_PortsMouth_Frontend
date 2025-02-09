@@ -1,8 +1,4 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-
-import { addPicture } from "../../../redux/actions/forms";
-import { useRecipeStore } from "../../../zustand/useRecipeStore";
 
 export default function PictureUpload({ existingPicture, handleFormChange }) {
   const [picture, setPicture] = useState(existingPicture || null);
