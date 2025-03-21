@@ -1,7 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getRecipes } from "../../redux/actions/recipes";
-
 import RecipeCard, { RecipeCardSkeleton } from "./RecipeCard";
 import { useSearchStore } from "../../zustand/useSearchStore";
 import { SearchIcon } from "@heroicons/react/solid";
@@ -9,7 +6,6 @@ import Tab from "../layouts/Tab";
 import { useRecipeStore } from "../../zustand/useRecipeStore";
 
 export default function SearchRecipes() {
-  const dispatch = useDispatch();
   const { recipes } = useRecipeStore();
   const { setSearch, search, filters, setFilters,getSearchedRecipes, getFilteredRecipes } = useSearchStore();
   const [filteredRecipes, setFilteredRecipes] = useState([]);
@@ -24,10 +20,6 @@ export default function SearchRecipes() {
     let ingredients = filteredRecipes.map((recipe) => recipe.ingredients).flat()
     return [...new Set(ingredients)].sort();
   })
-
-  useEffect(() => {
-    dispatch(getRecipes());
-  }, []);
 
   useEffect(() => {
     search !== "" && setFilteredRecipes(getSearchedRecipes(recipes));
@@ -67,11 +59,14 @@ export default function SearchRecipes() {
             <div className="text-center">No recipes found</div>
           ) : (
             <>
-              <div className="flex gap-2 p-4 sticky top-0 z-[1000] bg-white">
+              <label htmlFor="tabs" className=" w-full bg-white px-2 py-3">
+              Show Ingredients? &nbsp;
+              <input type="checkbox" id="tabs" className="peer checkbox accent-green-600 scale-105 px-1"/>
+              <div className=" flex-wrap gap-2 p-16 sticky top-0 z-[1000] bg-white hidden peer-checked:flex">
                 {ingredientTabs.map((ingredient) => (
                     <Tab key={ingredient} onClick={tabClickHandler} selected={search.toLowerCase().includes(ingredient.toLowerCase())}>{ingredient}</Tab>
                   ))}
-              </div>
+              </div></label>
               {filteredRecipes.map((recipe) => (
                 <RecipeCardSkeleton recipe={recipe} key={recipe.id} />
               ))}

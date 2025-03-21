@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { Disclosure } from "@headlessui/react";
@@ -14,28 +13,25 @@ import {
   ClockIcon,
 } from "@heroicons/react/outline";
 
-import {
-  getDetailRecipe,
-  likeRecipe,
-  saveRecipe,
-} from "../../redux/actions/recipes";
 import RecipeDelete from "./RecipeDelete";
 import { useRecipeStore } from "../../zustand/useRecipeStore";
+import { useAuthStore } from "../../zustand/useAuthStore";
+import LoaderMask from "../layouts/LoaderMask";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function RecipeDetail() {
-  const dispatch = useDispatch();
 
   const [modal, setModal] = useState(false);
 
-  const { getSingleRecipe,detailRecipe } = useRecipeStore();
+  const { getDetailRecipe,getSingleRecipe,detailRecipe, likeRecipe, saveRecipe, is_loading } = useRecipeStore();
+  const {user} = useAuthStore()
   const { id } = useParams();
 
   useEffect(() => {
-    getSingleRecipe(parseInt(id));
+    getDetailRecipe(id);
   }, []);
   console.log(detailRecipe)
 
@@ -48,7 +44,7 @@ export default function RecipeDetail() {
       </div>
     );
 
-  const procedures = detailRecipe.procedure.split(',');
+  const procedures = detailRecipe.procedures;
   const ingredients = detailRecipe.ingredients;
 
   const recipe = {
@@ -66,6 +62,7 @@ export default function RecipeDetail() {
 
   return (
     <>
+      {is_loading && <LoaderMask/>}
       <div className="bg-white">
         <main className="max-w-7xl mx-auto sm:pt-16 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto lg:max-w-none">
@@ -74,7 +71,7 @@ export default function RecipeDetail() {
                 <div className="w-full aspect-w-1 aspect-h-1">
                   <div>
                     <img
-                      src={detailRecipe.picture}
+                      src={process.env.HOST || "http://localhost:3415/media/" + detailRecipe.image}
                       alt=""
                       className="w-full h-full object-center object-cover sm:rounded-lg"
                     />
@@ -89,7 +86,9 @@ export default function RecipeDetail() {
                     {detailRecipe.title}
                   </h1>
 
-                  <Link to={`/recipe/${id}/edit/`}>
+                  {user && (user._id === detailRecipe.posted_by || user._id === detailRecipe.posted_by?._id) && (
+                    <>
+                    <Link to={`/recipe/${id}/edit/`}>
                     <button
                       type="button"
                       className="group ml-4 py-3 px-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500"
@@ -116,12 +115,14 @@ export default function RecipeDetail() {
                       Delete Recipe
                     </p>
                   </button>
+                  </>
+                  )}
                 </div>
 
                 <div className="mt-3">
                   <h2 className="sr-only">Recipe information</h2>
                   <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-teal-600 ">
-                    {detailRecipe.category.title}
+                    {detailRecipe.category.name}
                   </span>
                 </div>
 
@@ -129,7 +130,7 @@ export default function RecipeDetail() {
                   <h3 className="sr-only">Description</h3>
                   <div
                     className="text-base text-gray-700 space-y-6"
-                    dangerouslySetInnerHTML={{ __html: detailRecipe.desc }}
+                    dangerouslySetInnerHTML={{ __html: detailRecipe.description }}
                   />
                 </div>
 
@@ -138,7 +139,7 @@ export default function RecipeDetail() {
                     type="button"
                     className="group py-3 px-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                     onClick={() =>
-                      dispatch(saveRecipe(detailRecipe.author, id))
+                      saveRecipe(id)
                     }
                   >
                     <BookmarkIcon
@@ -147,13 +148,13 @@ export default function RecipeDetail() {
                     />
                     <p className="hidden ml-1 group-hover:block">Save</p>
                     <span className="ml-2">
-                      {detailRecipe.total_number_of_bookmarks}
+                      {detailRecipe.saves || 0}
                     </span>
                   </button>
                   <button
                     type="button"
                     className="group py-3 px-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500"
-                    onClick={() => dispatch(likeRecipe(id))}
+                    onClick={() => likeRecipe(id)}
                   >
                     <HeartIcon
                       className="h-6 w-6 flex-shrink-0"
@@ -161,7 +162,7 @@ export default function RecipeDetail() {
                     />
                     <p className="hidden ml-1 group-hover:block">Like</p>
                     <span className="ml-2">
-                      {detailRecipe.total_number_of_likes}
+                      {detailRecipe.likes || 0}
                     </span>
                   </button>
                 </div>

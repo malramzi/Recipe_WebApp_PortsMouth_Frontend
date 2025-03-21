@@ -9,7 +9,7 @@ export default function PictureUpload({ existingPicture, handleFormChange }) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setPicture(reader.result);
-        handleFormChange({ target: { name: "picture", value: reader.result } });
+        handleFormChange({ target: { name: "image", value: file } });
       };
       reader.readAsDataURL(file);
     }

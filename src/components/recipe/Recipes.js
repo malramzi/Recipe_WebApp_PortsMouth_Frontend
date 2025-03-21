@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getRecipes } from "../../redux/actions/recipes";
-
 import RecipeCard from "./RecipeCard";
 import { useRecipeStore } from "../../zustand/useRecipeStore";
 
 export default function Recipes() {
-  const dispatch = useDispatch();
   const { recipes} = useRecipeStore();
-
+  console.log(recipes)
 
   if (!recipes || recipes.length === 0)
     return (

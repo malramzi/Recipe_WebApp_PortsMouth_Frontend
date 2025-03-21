@@ -1,6 +1,7 @@
 import axios from "axios";
+import { useAuthStore } from "../zustand/useAuthStore";
 
-const baseURL = "http://127.0.0.1:8000/api";
+const baseURL = "http://localhost:3415";
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
@@ -15,40 +16,39 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config;
 
     if (
-      error.response.status === 401 &&
-      originalRequest.url ===
-        "http://127.0.0.1:8000/api/user/token/refresh/"
+      error.response.status === 401 
     ) {
-      window.location.href = "/user/login/";
+      useAuthStore.getState().logOut();
+      window.location.href = "/login/";
       return Promise.reject(error);
     }
 
-    if (
-      error.response.data.code === "token_not_valid" &&
-      error.response.status === 401 &&
-      !originalRequest._retry
-    ) {
-      originalRequest._retry = true;
-      const refreshToken = JSON.parse(localStorage.getItem("recipe")).refresh;
+    // if (
 
-      return axiosInstance
-        .post("/user/token/refresh/", {
-          refresh: refreshToken,
-        })
-        .then((response) => {
-          localStorage.setItem("recipe", JSON.stringify(response.data));
+    //   error.response.status === 401 &&
+    //   !originalRequest._retry
+    // ) {
+    //   originalRequest._retry = true;
+    //   const refreshToken = JSON.parse(localStorage.getItem("recipe")).refresh;
 
-          axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${
-            JSON.parse(localStorage.getItem("recipe")).access
-          }`;
+    //   return axiosInstance
+    //     .post("/user/token/refresh/", {
+    //       refresh: refreshToken,
+    //     })
+    //     .then((response) => {
+    //       localStorage.setItem("recipe", JSON.stringify(response.data));
 
-          originalRequest.headers["Authorization"] = `Bearer ${
-            JSON.parse(localStorage.getItem("recipe")).access
-          }`;
+    //       axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${
+    //         JSON.parse(localStorage.getItem("recipe")).access
+    //       }`;
 
-          return axiosInstance(originalRequest);
-        });
-    }
+    //       originalRequest.headers["Authorization"] = `Bearer ${
+    //         JSON.parse(localStorage.getItem("recipe")).access
+    //       }`;
+
+    //       return axiosInstance(originalRequest);
+    //     });
+    // }
     return Promise.reject(error);
   }
 );

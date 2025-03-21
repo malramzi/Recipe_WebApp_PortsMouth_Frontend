@@ -1,6 +1,5 @@
 import { Fragment, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   MenuAlt1Icon,
@@ -11,9 +10,10 @@ import {
   UserIcon,
 } from "@heroicons/react/outline";
 import { MailIcon } from "@heroicons/react/solid";
+import { useAuthStore } from "../../zustand/useAuthStore";
 
 const navigation = [
-  { name: "Profile", icon: UserIcon, to: "profile", current: true },
+  { name: "Profile", icon: UserIcon, to: "profile", current: false },
   { name: "My Recipes", icon: MenuIcon, to: "myRecipes", current: false },
   {
     name: "Saved Recipes",
@@ -21,7 +21,9 @@ const navigation = [
     to: "savedRecipes",
     current: false,
   },
-  { name: "My Food Categories", icon: MenuAlt1Icon, to: "categories", current: false },
+  { name: "My Food Categories", icon: MenuAlt1Icon, to: "myCategories", current: false },
+  { name: "Categories Around The World", icon: MenuAlt1Icon, to: "categories", current: false },
+  { name: "Recipe Maker", icon: MenuIcon, to: "recipeMaker", current: false },
 ];
 
 const secondaryNavigation = [{ name: "Logout", icon: LogoutIcon }];
@@ -32,11 +34,9 @@ function classNames(...classes) {
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const user = {
-    username: "John Doe",
-    email: "user@email.com",
-  };
-  const avatar = null;
+  const location = useLocation()
+  const user = useAuthStore(state => state.user)
+  const avatar = process.env.HOST || "http://localhost:3415/media/" + user.image
 
   return (
     <>
@@ -104,12 +104,12 @@ export default function Dashboard() {
                   aria-label="Sidebar"
                 >
                   <div className="px-2 space-y-1">
-                    {navigation.map((item) => (
+                    {navigation.map((item,idx) => (
                       <Link
                         key={item.name}
                         to={item.to}
                         className={classNames(
-                          item.current
+                          item.current || location.pathname.includes(item.to)
                             ? "bg-orange-500 text-white"
                             : "text-teal-100 hover:text-white hover:bg-teal-600",
                           "group flex items-center w-full px-2 py-2 text-sm leading-6 font-medium rounded-md"
@@ -171,7 +171,7 @@ export default function Dashboard() {
                     key={item.name}
                     to={item.to}
                     className={classNames(
-                      item.current
+                      item.current || location.pathname.includes(item.to)
                         ? "bg-orange-400 text-white"
                         : "text-teal-100 hover:text-white hover:bg-teal-600",
                       "group flex items-center w-full px-2 py-2 text-sm leading-6 font-medium rounded-md"
@@ -220,8 +220,8 @@ export default function Dashboard() {
               <img
                 className="h-16 w-16 rounded-full block"
                 src={
-                  avatar && avatar.avatar
-                    ? avatar.avatar
+                  avatar 
+                    ? avatar
                     : "https://res.cloudinary.com/dmtc1wlgq/image/upload/v1641911896/media/avatar/default_zrdbiq.png"
                 }
                 alt=""
@@ -229,7 +229,7 @@ export default function Dashboard() {
               <div>
                 <div className="flex items-center">
                   <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
-                    Welcome back, {user && user.username}
+                    Welcome back, {user && user.first_name + " " +  user.last_name}  
                   </h1>
                 </div>
                 <dl className="flex flex-col ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">

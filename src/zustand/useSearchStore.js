@@ -14,7 +14,7 @@ export const useSearchStore = create(
           let setIngredents = new Set(recipe.ingredients.join(" ").toLowerCase().split(" "));
 
           return (
-            recipe.desc.toLowerCase().includes(search.toLowerCase()) ||
+            recipe.description.toLowerCase().includes(search.toLowerCase()) ||
             recipe.title.toLowerCase().includes(search.toLowerCase()) ||
             search
               .toLowerCase()

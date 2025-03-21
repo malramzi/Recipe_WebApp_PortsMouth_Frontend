@@ -1,31 +1,22 @@
 import { useState, useEffect, createRef } from "react";
-import { useDispatch } from "react-redux";
 import { MinusIcon, PlusIcon } from "@heroicons/react/solid";
-
-import { addProcedures } from "../../../redux/actions/forms";
 
 export default function Procedure({ editMode, recipe, handleFormChange }) {
   let textInput = createRef();
-
-  const dispatch = useDispatch();
 
   const [procedures, setProcedures] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     if (recipe && editMode === true) {
-      const defaultProcedures = recipe.procedure.split(',');
-
-      defaultProcedures.map((defaultProcedure) =>
-        setProcedures((e) => [...e, defaultProcedure])
-      );
-      handleFormChange({target:{name:"procedures",value:[...procedures,...defaultProcedures].join(',')}})
+      const defaultProcedures = recipe.procedures;
+      setProcedures((e) => [...e, ...defaultProcedures])
     }
   }, []);
 
   useEffect(() => {
-    dispatch(addProcedures(procedures));
-  }, [procedures]);
+    handleFormChange({target:{name:"procedures",value:[...procedures]}})
+  },[procedures])
 
   const handleClick = () => {
     const value = textInput.current.value;

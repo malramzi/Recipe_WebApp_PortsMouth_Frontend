@@ -2,8 +2,8 @@ import React from "react";
 
 const CategoryForm = ({ editMode,handleFormSubmit }) => {
   const [formData, setFormData] = React.useState({
-    title: "",
-    desc: "",
+    name: "",
+    description: "",
   });
 
   const handleFormChange = (event) => {
@@ -41,8 +41,8 @@ const CategoryForm = ({ editMode,handleFormSubmit }) => {
                   </h1>
                   <input
                     type="text"
-                    name="title"
-                    id="title"
+                    name="name"
+                    id="name"
                     className="shadow-sm p-2 focus:outline-none focus:ring-teal-500 focus:border-teal-500 mt-1 block w-full border border-gray-300 rounded-md"
                     placeholder="Write a title for your recipe. Something catchy ..."
                     defaultValue={editMode ? formData.title : null}
@@ -55,12 +55,12 @@ const CategoryForm = ({ editMode,handleFormSubmit }) => {
                   </h1>
                   <div className="mt-1">
                     <textarea
-                      id="desc"
-                      name="desc"
+                      id="description"
+                      name="description"
                       rows={3}
                       className="shadow-sm p-2 focus:outline-none focus:ring-teal-500 focus:border-teal-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                       placeholder="Write a short description..."
-                      defaultValue={editMode ? formData.desc : null}
+                      defaultValue={editMode ? formData.description : null}
                       onChange={(e) => handleFormChange(e)}
                     />
                   </div>

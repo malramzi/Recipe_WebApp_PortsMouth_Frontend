@@ -1,44 +1,24 @@
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
-import bannerImg1 from "../assets/1.png";
 import food1 from "../assets/f1.jpg";
 import food2 from "../assets/f2.jpg";
 import food3 from "../assets/f3.jpg";
 import food4 from "../assets/f4.jpg";
 import { BookmarkIcon, ClockIcon, HeartIcon } from "@heroicons/react/outline";
+import LandingCarousel from "../carousel/LandingCarousel";
+import LoaderMask from "./LoaderMask";
+import { useEffect, useState } from "react";
 export default function Landing() {
-  return (
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const timeout = setTimeout(() => setLoading(false), 3000);
+    return () => clearTimeout(timeout);
+  }, []);
+  return loading ? (
+    <LoaderMask />
+  ) : (
     <>
-      <div
-        style={{
-          backgroundImage:
-            "linear-gradient(45deg,#00000f70,#0d9488f3),url('https://img.freepik.com/premium-photo/protein-vegetarians-tofu-vegetables-nuts-seeds-legumes-top-view-black-background-concept-healthy-clean-food-copy-space_152520-2085.jpg')",
-        }}
-        className="h-[calc(80vh-80px)] bg-no-repeat bg-cover rounded-b-md shadow-md "
-      >
-        <div className="mx-auto grid grid-cols-3 items-center h-full max-w-[80vw]">
-          <div className="col-span-2 text-white p-4 flex flex-col gap-4 [&_*]:transition-all [&_*]:ease-in-out">
-            <h1 className="text-7xl font-bold">
-              NEED SOMETHING FOR DINNER TONIGHT?
-            </h1>
-            <p className="text-2xl font-bold p-1 flex flex-col gap-3 hover:ml-5">
-              Find it Here{" "}
-              <div>
-                <Link
-                  to="/recipe"
-                  className="inline-block px-5 py-3 mb-4 text-xs font-semibold tracking-wider ring-1 text-white bg-teal-600 ring-gray-100 hover:text-teal-600 uppercase rounded-full hover:bg-white hover:ring-teal-600"
-                >
-                  Explore
-                </Link>
-              </div>
-            </p>
-          </div>
-          <img
-            src={bannerImg1}
-            className="col-span-1 h-[400px] animate-[spin_9s_linear_infinite] hover:animate-none"
-          />
-        </div>
-      </div>
+      <LandingCarousel />
 
       <section className="bg-orange-100 ">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">

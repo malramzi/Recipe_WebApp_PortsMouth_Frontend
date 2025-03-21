@@ -1,18 +1,23 @@
 import { Fragment, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
-
-import { deleteRecipe } from "../../redux/actions/recipes";
-
+import { useRecipeStore } from "../../zustand/useRecipeStore";
+import { useAuthStore } from "../../zustand/useAuthStore";
+import { useNavigate } from "react-router-dom";
 export default function Logout({ modal, setModal, id }) {
   const cancelButtonRef = useRef(null);
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  const {deleteRecipe, error, is_loading, deleteRecipeLocal} = useRecipeStore();
+  const {logged_in} = useAuthStore();
 
-  const handleDeleteClick = () => {
-    dispatch(deleteRecipe(id));
+  const handleDeleteClick = async () => {
+    await deleteRecipe(id)
+    if (!is_loading && !error) {
+      navigate(-1);
+    }
   };
+
 
   return (
     <Transition.Root show={modal} as={Fragment}>
@@ -99,3 +104,4 @@ export default function Logout({ modal, setModal, id }) {
     </Transition.Root>
   );
 }
+

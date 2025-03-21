@@ -2,10 +2,12 @@ import { create } from "zustand";
 import axiosInstance from "../utils/axios";
 import { categories } from "../utils/dummyData.js";
 import { persist } from "zustand/middleware";
+import { toastSuccess, toastError, toastWarning } from "../components/layouts/MessageToasts.js";
 export const useCategoryStore = create(
   persist(
     (set, get) => ({
-      categories: categories,
+      categories: [],
+      userCategories:[],
       detailCategory: null,
       is_loading: false,
       error: null,
@@ -26,67 +28,87 @@ export const useCategoryStore = create(
           let category = get().categories.find((category) => category.id === id);
           set({ detailCategory: category, is_loading: false });
         } catch (error) {
-          set({ error: error.response.data, is_loading: false });
+          set({ error: error.response.data.data.message, is_loading: false });
+          toastError(error.response.data.data.message);
         }
       },
       getCategories: async () => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.get("/categories/");
-          set({ categories: response.data, is_loading: false });
+          const response = await axiosInstance.get("/explore/categories/");
+          set({ categories: response.data.data, is_loading: false });
         } catch (error) {
-          set({ error: error.response.data, is_loading: false });
+          set({ error: error.response.data.data.message, is_loading: false });
+          toastError(error.response.data.data.message);
+        }
+      },
+
+      getCategoriesByUser: async () => {
+        set({ is_loading: true });
+        try {
+          const response = await axiosInstance.get(`/explore/categories/user/`);
+          set({ userCategories: response.data.data, is_loading: false });
+        } catch (error) {
+          set({ error: error.response.data.data.message, is_loading: false });
+          toastError(error.response.data.data.message);
         }
       },
 
       getDetailCategory: async (id) => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.get(`/categories/${id}/`);
+          const response = await axiosInstance.get(`/explore/category/${id}/`);
           set({ detailCategory: response.data, is_loading: false });
         } catch (error) {
-          set({ error: error.response.data, is_loading: false });
+          set({ error: error.response.data.data.message, is_loading: false });
+          toastError(error.response.data.data.message);
         }
       },
 
       createCategory: async (category) => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.post("/categories/", category);
+          const response = await axiosInstance.post("/explore/category/", category);
           set({
-            categories: [...get().categories, response.data],
+            userCategories: [...get().categories, response.data.data],
             is_loading: false,
           });
+          toastSuccess("Category created successfully");
         } catch (error) {
-          set({ error: error.response.data, is_loading: false });
+          set({ error: error.response.data.data.message, is_loading: false });
+          toastError(error.response.data.data.message);
         }
       },
 
       updateCategory: async (id, category) => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.put(`/categories/${id}/`, category);
+          const response = await axiosInstance.put(`/explore/category/${id}/`, category);
           set({
-            categories: get().categories.map((c) =>
-              c.id === id ? response.data : c
+            userCategories: get().userCategories.map((c) =>
+              c._id === id ? response.data.data : c
             ),
             is_loading: false,
           });
+          toastSuccess("Category updated successfully");
         } catch (error) {
-          set({ error: error.response.data, is_loading: false });
+          set({ error: error.response.data.data.message, is_loading: false });
+          toastError(error.response.data.data.message);
         }
       },
 
       deleteCategory: async (id) => {
         set({ is_loading: true });
         try {
-          await axiosInstance.delete(`/categories/${id}/`);
+          await axiosInstance.delete(`/explore/category/${id}/`);
           set({
-            categories: get().categories.filter((c) => c.id !== id),
+            userCategories: get().userCategories.filter((c) => c._id !== id),
             is_loading: false,
           });
+          toastWarning("Category deleted successfully");
         } catch (error) {
           set({ error: error.response.data, is_loading: false });
+          toastError("Failed to delete category");
         }
       },
     }),
@@ -95,4 +117,7 @@ export const useCategoryStore = create(
     }
   )
 );
+
+
+useCategoryStore.getState().getCategories();
 

@@ -1,20 +1,20 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
 import RecipeCard from "./RecipeCard";
-import { getSavedRecipes } from "../../redux/actions/user";
 import { useRecipeStore } from "../../zustand/useRecipeStore";
+import { useEffect } from "react";
 
 export default function SavedRecipes() {
-  const dispatch = useDispatch();
 
-  const { recipes} = useRecipeStore();
+  const { saved_recipes, getSavedRecipes } = useRecipeStore();
+  
+  useEffect(() => {
+      getSavedRecipes();
+    }, []);
 
-  if (!recipes)
+  if (!saved_recipes || !saved_recipes.length)
     return (
       <div className="px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-15">
         <p className="text-3xl text-center text-gray-700">
-          Can not find any recipes, sorry (:
+          No Saved Recipes Yet.
         </p>
       </div>
     );
@@ -26,7 +26,7 @@ export default function SavedRecipes() {
           <h2 className="text-lg leading-6 font-medium text-gray-900">
             Saved Recipes
           </h2>
-          <RecipeCard recipes={recipes} quickview={false} />
+          <RecipeCard recipes={saved_recipes} quickview={false} />
         </div>
       </div>
     </>

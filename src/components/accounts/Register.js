@@ -1,21 +1,18 @@
 import { LockClosedIcon } from "@heroicons/react/solid";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../redux/actions/auth";
 import { useAuthStore } from "../../zustand/useAuthStore";
 import LoginBanner from "../assets/l1.jpg"
 export default function Register() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const { logged_in, logIn } = useAuthStore();
-
-  const dispatch = useDispatch();
-
+  const { logged_in, signUp } = useAuthStore();
+  
   useEffect(() => {
     if (logged_in) {
       navigate("/dashboard");
@@ -24,7 +21,7 @@ export default function Register() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    logIn();
+    signUp(email, password,firstName,lastName );
   };
 
   return (
@@ -48,18 +45,33 @@ export default function Register() {
               <input type="hidden" name="remember" defaultValue="true" />
               <div className="rounded-md shadow-sm -space-y-px">
                 <div>
-                  <label htmlFor="username" className="sr-only">
-                    Username
+                  <label htmlFor="first-name" className="sr-only">
+                    First Name
                   </label>
                   <input
-                    id="username"
-                    name="username"
+                    id="first-name"
+                    name="firstName"
                     type="text"
-                    autoComplete="username"
+                    autoComplete="first-name"
                     required
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm"
-                    placeholder="Username"
-                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="First Name"
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="last-name" className="sr-only">
+                    last Name
+                  </label>
+                  <input
+                    id="last-name"
+                    name="lastName"
+                    type="text"
+                    autoComplete="last-name"
+                    required
+                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm"
+                    placeholder="Last Name"
+                    onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
                 <div>

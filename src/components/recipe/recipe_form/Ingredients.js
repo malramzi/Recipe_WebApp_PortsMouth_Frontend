@@ -1,8 +1,5 @@
 import { useState, createRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { PlusIcon } from "@heroicons/react/solid";
-
-import { addIngredients } from "../../../redux/actions/forms";
 
 export default function Ingredients({ editMode, recipe, handleFormChange}) {
   let textInput = createRef();
@@ -10,21 +7,12 @@ export default function Ingredients({ editMode, recipe, handleFormChange}) {
   const [ingredients, setIngredients] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     if (recipe && editMode === true) {
       const defaultIngredients = recipe.ingredients;
-
-      defaultIngredients.map((defaultIngredient) =>
-        setIngredients((e) => [...e, defaultIngredient])
-      );
+        setIngredients((e) => [...e, ...defaultIngredients])
     }
   }, []);
-
-  useEffect(() => {
-    dispatch(addIngredients(ingredients));
-  }, [ingredients]);
 
   const handleClick = () => {
     const value = textInput.current.value;

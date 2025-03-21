@@ -1,8 +1,6 @@
 import { Fragment, useRef, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
-
-import { logout } from "../../redux/actions/auth";
 import { useAuthStore } from "../../zustand/useAuthStore";
 
 export default function Logout({ modal, setModal }) {

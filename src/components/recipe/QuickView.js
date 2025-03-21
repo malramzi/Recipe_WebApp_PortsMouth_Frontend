@@ -1,7 +1,5 @@
 import { Fragment, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-
 import { Dialog, Transition } from "@headlessui/react";
 import {
   XIcon,
@@ -9,18 +7,15 @@ import {
   BookmarkIcon,
   ClockIcon,
 } from "@heroicons/react/outline";
-
-import { likeRecipe, saveRecipe } from "../../redux/actions/recipes";
+import { useRecipeStore } from "../../zustand/useRecipeStore";
 
 export default function QuickView({ open, setOpen, id }) {
-  const { recipes, is_loading } = useSelector((state) => state.recipes);
-
-  const dispatch = useDispatch();
+  const { recipes } = useRecipeStore();
 
   const recipe = recipes.filter((recipe) => recipe.id === id);
 
-  const [like, setLike] = useState(recipe[0].total_number_of_likes);
-  const [bookmark, setBookmark] = useState(recipe[0].total_number_of_bookmarks);
+  const [like, setLike] = useState(recipe.liked_by.length);
+  const [bookmark, setBookmark] = useState(recipe.saved_by.length);
 
   return (
     <>
@@ -76,7 +71,7 @@ export default function QuickView({ open, setOpen, id }) {
                     <div className="sm:col-span-4 lg:col-span-5">
                       <div className="aspect-w-1 aspect-h-1 rounded-lg bg-gray-100 overflow-hidden">
                         <img
-                          src={recipe[0].picture}
+                          src={recipe.picture}
                           alt=""
                           className="w-full h-full"
                         />
@@ -84,7 +79,7 @@ export default function QuickView({ open, setOpen, id }) {
                     </div>
                     <div className="sm:col-span-8 lg:col-span-7">
                       <h2 className="text-2xl font-extrabold text-gray-900 sm:pr-12">
-                        {recipe[0].title}
+                        {recipe.title}
                       </h2>
 
                       <section
@@ -95,14 +90,14 @@ export default function QuickView({ open, setOpen, id }) {
                           Recipe information
                         </h3>
                         <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-teal-600 ">
-                          {recipe[0].category.name}
+                          {recipe.category.name}
                         </span>
 
                         <div className="mt-6">
                           <h4 className="sr-only">Description</h4>
 
                           <p className="text-sm text-gray-700">
-                            {recipe[0].desc}
+                            {recipe.description}
                           </p>
                         </div>
                       </section>
@@ -116,7 +111,6 @@ export default function QuickView({ open, setOpen, id }) {
                             type="button"
                             className="group py-3 px-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                             onClick={() => {
-                              dispatch(saveRecipe(recipe[0].author, id));
                               setBookmark(bookmark + 1);
                             }}
                           >
@@ -133,7 +127,6 @@ export default function QuickView({ open, setOpen, id }) {
                             type="button"
                             className="group py-3 px-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                             onClick={() => {
-                              dispatch(likeRecipe(id));
                               setLike(like + 1);
                             }}
                           >
@@ -152,11 +145,11 @@ export default function QuickView({ open, setOpen, id }) {
                           <div className="inline-flex items-center text-teal-600 border py-1 px-2 mt-3 border-transparent bg-teal-50 rounded-md">
                             <ClockIcon className="h-8 w-8 text-teal-600 pr-1" />{" "}
                             <span className="font-medium">
-                              {recipe[0].cook_time}
+                              {recipe.cook_time}
                             </span>
                           </div>
                           <p className="mt-8 text-sm font-weight text-gray-500 truncate">
-                            by {recipe[0].username}
+                            by {recipe.username}
                           </p>
                         </div>
 

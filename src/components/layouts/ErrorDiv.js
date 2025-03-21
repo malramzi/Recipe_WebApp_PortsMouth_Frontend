@@ -1,13 +1,9 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
 import { XCircleIcon } from "@heroicons/react/solid";
-import { clearMessage } from "../../redux/actions/messages";
 
 export default function ErrorDiv() {
-  const { msg, isOpen } = useSelector((state) => state.errors);
-
-  const dispatch = useDispatch();
+  const [msg, setMsg] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [errorKey] = useState({
     username: "Username",
@@ -31,7 +27,7 @@ export default function ErrorDiv() {
             <div className="flex">
               <div className="flex-shrink-0">
                 <XCircleIcon
-                  onClick={() => dispatch(clearMessage(msg))}
+                  onClick={() => ''}
                   className="h-5 w-5 text-red-400"
                   aria-hidden="true"
                 />

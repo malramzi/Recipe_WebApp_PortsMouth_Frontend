@@ -1,29 +1,21 @@
 import { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/solid";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
-
 import Logout from "../accounts/Logout";
-import { loadUser, getAvatar } from "../../redux/actions/user";
 import SearchRecipes from "../recipe/SearchRecipes";
 import { useAuthStore } from "../../zustand/useAuthStore";
 
-const userNavigation = [{ name: "Dashboard", to: "/dashboard" }];
+const userNavigation = [{ name: "Dashboard", to: "/dashboard/myRecipes" }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Header() {
-  const {logged_in} = useAuthStore()
-  const user = {
-    username : "John Doe",
-    email : "user@email.com"
-  }
-  const avatar = null
+  const {logged_in, user} = useAuthStore()
+  const avatar = process.env.HOST || "http://localhost:3415/media/" + user.image
 
   const [modal, setModal] = useState(false);
 
@@ -44,7 +36,7 @@ export default function Header() {
       >
         {({ open }) => (
           <>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-[80vw] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
                 <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
                   <div className="flex-shrink-0 flex items-center">
@@ -81,20 +73,19 @@ export default function Header() {
                   {/* Profile dropdown */}
                   {logged_in && (
                     <Menu as="div" className="flex-shrink-0 relative ml-5">
-                      <div>
-                        <Menu.Button className="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                        <Menu.Button className="bg-white rounded-full flex gap-2 items-center p-2 ring-1 ring-black/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-8 w-8 rounded-full"
                             src={
-                              avatar && avatar.avatar
-                                ? avatar.avatar
+                              avatar
+                                ? avatar
                                 : "https://res.cloudinary.com/dmtc1wlgq/image/upload/v1641911896/media/avatar/default_zrdbiq.png"
                             }
                             alt=""
                           />
+                          <p className="font-normal">Hi {user && user.first_name} !</p>
                         </Menu.Button>
-                      </div>
                       <Transition
                         as={Fragment}
                         enter="transition ease-out duration-100"
@@ -158,6 +149,12 @@ export default function Header() {
                       Create Recipe
                     </Link>
                   )}
+                  <Link
+                      to="/recipe"
+                      className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                    >
+                      Explore Recipes
+                    </Link>
                 </div>
               </div>
             </div>
@@ -184,11 +181,17 @@ export default function Header() {
                 {logged_in && (
                   <Link
                     to="/recipe/create"
-                    className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-600 hover:bg-teal-700"
+                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-600 hover:bg-teal-700"
                   >
                     Create Recipe
                   </Link>
                 )}
+                <Link
+                    to="/recipe"
+                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-600 hover:bg-teal-700"
+                  >
+                    Explore Recipes
+                  </Link>
                 {/* {navigation.map((item) => (
                   <a
                     key={item.name}
@@ -206,20 +209,21 @@ export default function Header() {
               {logged_in && (
                 <div className="border-t border-gray-200 pt-4 pb-3">
                   <div className="max-w-3xl mx-auto px-4 flex items-center sm:px-6">
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0 px-3 py-2 ring rounded-full ">
                       <img
                         className="h-10 w-10 rounded-full"
                         src={
                           avatar
-                            ? avatar.avatar
+                            ? avatar
                             : "https://res.cloudinary.com/dmtc1wlgq/image/upload/v1641911896/media/avatar/default_zrdbiq.png"
                         }
                         alt=""
                       />
+
                     </div>
                     <div className="ml-3">
                       <div className="text-base font-medium text-gray-800">
-                        {user && user.username}
+                        {user && user.first_name} {user && user.last_name}
                       </div>
                       <div className="text-sm font-medium text-gray-500">
                         {user && user.email}

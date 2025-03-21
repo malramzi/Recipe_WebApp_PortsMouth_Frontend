@@ -18,7 +18,7 @@ export default function Login() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    logIn();
+    logIn(email, password);
   };
 
   return (

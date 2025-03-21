@@ -3,11 +3,12 @@ import { useCategoryStore } from '../../zustand/useCategoryStore'
 import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 
 const CategoryCard = ({category}) => {
-  const { deleteCategoryLocal, updateCategoryLocal } = useCategoryStore()
+  const { deleteCategory, updateCategory } = useCategoryStore()
   const [isEditing, setIsEditing] = useState(false)
 
+
   const handleDelete = () => {
-    deleteCategoryLocal(category.id)
+    deleteCategory(category._id)
   }
 
   const handleEdit = () => {
@@ -15,7 +16,7 @@ const CategoryCard = ({category}) => {
   }
 
   const handleSave = (formData) => {
-    updateCategoryLocal(category.id, formData)
+    updateCategory(category._id, formData)
     setIsEditing(false)
   }
 
@@ -34,21 +35,21 @@ const CategoryCard = ({category}) => {
           <form onSubmit={(e) => {
             e.preventDefault()
             handleSave({
-              title: e.target.title.value,
-              desc: e.target.desc.value
+              name: e.target.name.value,
+              description: e.target.description.value
             })
           }}>
-            <input type="text" name="title" defaultValue={category.title} className="block w-full px-3 py-2 mb-3 text-base text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
-            <textarea name="desc" defaultValue={category.desc} className="block w-full px-3 py-2 mb-3 text-base text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+            <input type="text" name="name" defaultValue={category.name} className="block w-full px-3 py-2 mb-3 text-base text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+            <textarea name="description" defaultValue={category.description} className="block w-full px-3 py-2 mb-3 text-base text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
             <button type="submit" className="inline-flex justify-center w-full py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">Save</button>
           </form>
         ) : (
           <>
             <h3 className="text-lg leading-6 font-medium text-gray-900">
-              {category.title}
+              {category.name}
             </h3>
             <p className="mt-1 max-w-2xl text-sm text-gray-600">
-            {category.desc}
+            {category.description}
             </p>
           </>
         )}

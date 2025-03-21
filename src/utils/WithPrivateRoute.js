@@ -1,10 +1,11 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import { useAuthStore } from "../zustand/useAuthStore";
 
 const WithPrivateRoute = ({ children }) => {
-  const token = true;
+  const {token, user, logged_in} = useAuthStore();
 
-  if (token) {
+  if (token && user._id && logged_in) {
     return children;
   }
 

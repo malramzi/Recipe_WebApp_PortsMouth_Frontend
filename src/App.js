@@ -20,27 +20,25 @@ import SearchRecipes from "./components/recipe/SearchRecipes";
 import CategoryForm from "./components/recipe/category_form/CategoryForm";
 import Categories from "./components/recipe/Categories";
 import CategoryCreate from "./components/recipe/CategoryCreate";
+import RecipeMaker from "./components/recipe/RecipeMaker";
+import LoaderMask from "./components/layouts/LoaderMask";
+import { ToastContainer } from "react-toastify";
 
 export default function App() {
   return (
+    <>
     <Router>
       <Header />
-      <ErrorDiv />
       <Routes>
+      <Route exact path="/loader" element={<LoaderMask />} />
         <Route exact path="/" element={<Landing />} />
         <Route exact path="/search" element={<SearchRecipes />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/login" element={<Login />} />
-
-        <Route exact path="/recipe" element={<Recipes />} />
-        
-        <Route
-          exact
-          path="/recipe/:id"
+        <Route exact path="/recipe" element={<Recipes />} />  
+        <Route exact path="/recipe/:id"
           element={
-            <WithPrivateRoute>
               <RecipeDetail />
-            </WithPrivateRoute>
           }
         />
         <Route
@@ -79,12 +77,16 @@ export default function App() {
             </WithPrivateRoute>
           }
         >
-          <Route exact path="categories" element={<Categories />} />
+          <Route exact path="myCategories" element={<Categories />} />
+          <Route exact path="categories" element={<Categories all />} />
           <Route path="profile" element={<Profile />} />
           <Route path="myRecipes" element={<MyRecipes />} />
           <Route path="savedRecipes" element={<SavedRecipes />} />
+          <Route exact path="recipeMaker" element={<RecipeMaker />} /> 
         </Route>
       </Routes>
     </Router>
+    <ToastContainer/>
+    </>
   );
 }

@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-
-import { addCooktime } from "../../../redux/actions/forms";
 
 export default function TimePicker({ editMode, recipe, handleFormChange }) {
-  const dispatch = useDispatch();
 
   let defaultCookTime;
 
