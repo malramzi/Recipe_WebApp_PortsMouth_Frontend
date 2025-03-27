@@ -26,7 +26,8 @@ export default function Profile() {
     formdata.append("first_name", firstName);
     formdata.append("last_name", lastName);
     formdata.append("email", email);
-    formdata.append("image", picture);
+    if(picture)
+      formdata.append("image", picture);
     updateUser(formdata)
   }
 

@@ -70,7 +70,7 @@ export const useCategoryStore = create(
         try {
           const response = await axiosInstance.post("/explore/category/", category);
           set({
-            userCategories: [...get().categories, response.data.data],
+            userCategories: [...get().userCategories, response.data.data],
             is_loading: false,
           });
           toastSuccess("Category created successfully");

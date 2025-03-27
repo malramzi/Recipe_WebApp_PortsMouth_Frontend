@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function RecipeCreate() {
   const {createRecipe, is_loading , error} = useRecipeStore();
-  const navigate = useNavigate();
   const handleFormSubmit = async (formData) => {
     let recipe = new FormData();
     Object.keys(formData).forEach((key) => {
@@ -14,9 +13,6 @@ export default function RecipeCreate() {
       else 
         recipe.append(key, formData[key])});
     await createRecipe(recipe);
-    if (!is_loading && !error) {
-      navigate(-1);
-    }
   };
 
   return (

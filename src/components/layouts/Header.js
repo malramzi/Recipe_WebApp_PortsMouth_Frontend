@@ -6,7 +6,7 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import Logout from "../accounts/Logout";
 import SearchRecipes from "../recipe/SearchRecipes";
 import { useAuthStore } from "../../zustand/useAuthStore";
-
+import { img as userImg } from '../assets/userImg'
 const userNavigation = [{ name: "Dashboard", to: "/dashboard/myRecipes" }];
 
 function classNames(...classes) {
@@ -15,7 +15,7 @@ function classNames(...classes) {
 
 export default function Header() {
   const {logged_in, user} = useAuthStore()
-  const avatar = process.env.HOST || "http://localhost:3415/media/" + user.image
+  const avatar = user ? process.env.HOST || "http://localhost:3415/media/" + user.image : (userImg)
 
   const [modal, setModal] = useState(false);
 
@@ -61,7 +61,7 @@ export default function Header() {
                     )}
                   </Popover.Button>
                 </div>
-                <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
+                <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4 z-[1000]">
                   {/* <a
                     href="/"
                     className="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
@@ -113,7 +113,7 @@ export default function Header() {
                           ))}
                           <Menu.Item>
                             <button
-                              className="block py-2 px-4 text-sm text-gray-700"
+                              className="block py-2 px-4 text-sm text-gray-700 hover:bg-red-400"
                               onClick={() => setModal(true)}
                             >
                               {" "}
@@ -237,7 +237,7 @@ export default function Header() {
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   </button> */}
                   </div>
-                  <div className="mt-3 max-w-3xl mx-auto px-2 space-y-1 sm:px-4">
+                  <div className="mt-3 max-w-3xl mx-auto px-2 space-y-1 sm:px-4 z-1000">
                     {userNavigation.map((item) => (
                       <Link
                         key={item.name}
@@ -248,7 +248,7 @@ export default function Header() {
                       </Link>
                     ))}
                     <button
-                      className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                      className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-red-400 hover:text-gray-900"
                       onClick={() => setModal(true)}
                     >
                       {" "}

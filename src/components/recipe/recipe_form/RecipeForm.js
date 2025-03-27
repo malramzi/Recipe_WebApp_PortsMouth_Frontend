@@ -88,7 +88,7 @@ export default function RecipeCreate(props) {
                   />
                   <Procedure editMode={props.editMode} recipe={props.recipe} handleFormChange={handleFormChange} />
                   <TimePicker editMode={props.editMode} recipe={props.recipe} handleFormChange={handleFormChange} />
-                  <PictureUpload existingPicture={formData.picture} handleFormChange={handleFormChange}/>
+                  <PictureUpload existingPicture={formData.image} handleFormChange={handleFormChange}/>
                 </div>
                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                   <button

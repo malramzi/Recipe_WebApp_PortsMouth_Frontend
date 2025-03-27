@@ -8,6 +8,12 @@ import {
   LogoutIcon,
   MenuIcon,
   UserIcon,
+  CubeIcon,
+  SearchCircleIcon,
+  GlobeAltIcon,
+  DatabaseIcon,
+  ClipboardListIcon
+  
 } from "@heroicons/react/outline";
 import { MailIcon } from "@heroicons/react/solid";
 import { useAuthStore } from "../../zustand/useAuthStore";
@@ -21,9 +27,12 @@ const navigation = [
     to: "savedRecipes",
     current: false,
   },
-  { name: "My Food Categories", icon: MenuAlt1Icon, to: "myCategories", current: false },
-  { name: "Categories Around The World", icon: MenuAlt1Icon, to: "categories", current: false },
-  { name: "Recipe Maker", icon: MenuIcon, to: "recipeMaker", current: false },
+  { name: "My Food Categories", icon: DatabaseIcon, to: "myCategories", current: false },
+  { name: "Categories Around The World", icon: GlobeAltIcon, to: "categories", current: false },
+  { name: "Smart Recipe Finder", icon: SearchCircleIcon, to: "recipeMaker", current: false },
+  { name: "Create a Meal", icon: CubeIcon, to: "meal-create", current: false },
+  { name: "Generate Meal Plan", icon: ClipboardListIcon, to: "mealplan-create", current: false },
+  
 ];
 
 const secondaryNavigation = [{ name: "Logout", icon: LogoutIcon }];

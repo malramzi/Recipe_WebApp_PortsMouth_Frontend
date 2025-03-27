@@ -45,8 +45,8 @@ export const useAuthStore = create(
           set({ user });
           toastSuccess("Profile updated successfully");
         } catch (error) {
-          console.error("Update profile failed:", error);
-          toastError("Profile update failed");
+          console.error("Update profile failed:", error.response.data.data.error);
+          toastError(error.response.data.data.error || "Profile update failed");
         }
       },
       changePassword: async (oPassword, nPassword) => {
@@ -57,8 +57,8 @@ export const useAuthStore = create(
           axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
           toastSuccess("Password changed successfully");
         } catch (error) {
-          console.error("Change password failed:", error);
-          toastError("Password change failed");
+          console.error("Change password failed:", error.response.data.data.error);
+          toastError(error.response.data.data.error || "Password change failed");
         }
       },
       logged_in: false,

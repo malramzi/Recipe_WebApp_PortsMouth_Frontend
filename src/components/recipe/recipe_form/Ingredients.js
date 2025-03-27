@@ -27,6 +27,7 @@ export default function Ingredients({ editMode, recipe, handleFormChange}) {
 
   const handleXClick = (ingredient) => {
     setIngredients(ingredients.filter((x) => x !== ingredient));
+    handleFormChange({target:{name:"ingredients",value:[...ingredients.filter((x) => x !== ingredient)]}})
   };
 
   return (

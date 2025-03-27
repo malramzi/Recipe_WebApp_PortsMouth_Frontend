@@ -27,7 +27,7 @@ export default function PictureUpload({ existingPicture, handleFormChange }) {
       >
         <div
           className="mt-4 flex justify-center items-center h-[500px] px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-center bg-cover"
-          style={{ backgroundImage: `url('${picture}')` }}
+          style={{ backgroundImage: `url('${process.env.HOST || "http://localhost:3415/media/" + picture}')` }}
         >
           {
             <div className={` ${picture && "hidden"} space-y-1 text-center`}>
