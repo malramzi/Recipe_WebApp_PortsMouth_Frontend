@@ -7,7 +7,7 @@ import MealPlanForm from "./MealPlanForm";
 export default function MealPlanCreate() {
   const navigate = useNavigate();
   const { createMealPlan } = useMealPlanStore();
-  const { meals, getUserMeals } = useMealStore();
+  const { meals, getMeals } = useMealStore();
   
   const [formData, setFormData] = useState({
     title:"",
@@ -18,7 +18,7 @@ export default function MealPlanCreate() {
   });
 
   useEffect(() => {
-    getUserMeals();
+    getMeals();
   }, []);
 
   const handleChange = (e) => {
