@@ -12,7 +12,8 @@ import {
   SearchCircleIcon,
   GlobeAltIcon,
   DatabaseIcon,
-  ClipboardListIcon
+  ClipboardListIcon,
+  CubeTransparentIcon
   
 } from "@heroicons/react/outline";
 import { MailIcon } from "@heroicons/react/solid";
@@ -27,6 +28,8 @@ const navigation = [
     to: "savedRecipes",
     current: false,
   },
+  { name: "My Meals", icon: CubeTransparentIcon, to: "myMeals", current: false },
+  { name: "My Meal Plans", icon: DatabaseIcon, to: "myMealPlans", current: false },
   { name: "My Food Categories", icon: DatabaseIcon, to: "myCategories", current: false },
   { name: "Categories Around The World", icon: GlobeAltIcon, to: "categories", current: false },
   { name: "Smart Recipe Finder", icon: SearchCircleIcon, to: "recipeMaker", current: false },

@@ -25,6 +25,12 @@ import LoaderMask from "./components/layouts/LoaderMask";
 import { ToastContainer } from "react-toastify";
 import MealForm from "./components/mealplan/MealForm";
 import MealCreate from "./components/mealplan/CreateMeal";
+import MealPlanCreate from "./components/mealplan/CreateMealPlan";
+import MealPlans from "./components/mealplan/MealPlans";
+import MealPlanDetail from "./components/mealplan/MealPlanDetail";
+import MealPlanEdit from "./components/mealplan/MealPlanEdit";
+import MyMeals from "./components/mealplan/MyMeals";
+import MealEdit from "./components/mealplan/MealEdit";
 
 export default function App() {
   return (
@@ -37,7 +43,18 @@ export default function App() {
           <Route exact path="/search" element={<SearchRecipes />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/recipe" element={<Recipes />} />
+          <Route exact path="/recipe" element={<Recipes />} />      
+          <Route exact path="/mealPlans" element={<MealPlans all />} />  
+          <Route exact path="/mealPlan/:id" element={<MealPlanDetail />} /> 
+          <Route
+            exact
+            path="/mealPlan/edit/:id"
+            element={
+              <WithPrivateRoute>
+                <MealPlanEdit />
+              </WithPrivateRoute>
+            }
+          />
           <Route exact path="/recipe/:id" element={<RecipeDetail />} />
           <Route
             exact
@@ -59,6 +76,15 @@ export default function App() {
           />
           <Route
             exact
+            path="/meals/edit/:id"
+            element={
+              <WithPrivateRoute>
+                <MealEdit />
+              </WithPrivateRoute>
+            }
+          />
+          <Route
+            exact
             path="/recipe/categories/create"
             element={
               <WithPrivateRoute>
@@ -66,7 +92,6 @@ export default function App() {
               </WithPrivateRoute>
             }
           />
-
           <Route
             path="dashboard"
             element={
@@ -78,10 +103,13 @@ export default function App() {
             <Route exact path="myCategories" element={<Categories />} />
             <Route exact path="categories" element={<Categories all />} />
             <Route path="profile" element={<Profile />} />
-            <Route path="myRecipes" element={<MyRecipes />} />
+            <Route path="myRecipes" element={<MyRecipes />} /> 
+            <Route exact path="myMeals" element={<MyMeals />} />
+            <Route exact path="myMealPlans" element={<MealPlans />} />
             <Route path="savedRecipes" element={<SavedRecipes />} />
             <Route exact path="recipeMaker" element={<RecipeMaker />} />
             <Route exact path="meal-create" element={<MealCreate />} />
+            <Route exact path="mealPlan-create" element={<MealPlanCreate />} />            
           </Route>
         </Routes>
       </Router>

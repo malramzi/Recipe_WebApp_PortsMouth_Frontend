@@ -14,9 +14,9 @@ export const useMealStore = create(
       getMeals: async () => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.get("/meal/");
-
-          set({ meals: response.data.results });
+          const response = await axiosInstance.get("/feature/meals/");
+          console.log(response.data)
+          set({ meals: response.data.data });
           toastSuccess("Meals fetched successfully");
         } catch (error) {
           set({ error: error });
@@ -29,9 +29,9 @@ export const useMealStore = create(
       getDetailMeal: async (id) => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.get(`/meal/${id}/`);
+          const response = await axiosInstance.get(`/feature/meal/${id}/`);
 
-          set({ detailMeal: response.data });
+          set({ detailMeal: response.data.data });
           toastSuccess("Meal fetched successfully");
         } catch (error) {
           set({ error: error });
@@ -44,9 +44,14 @@ export const useMealStore = create(
       createMeal: async (formData) => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.post("/meal/", formData);
+          
+          const finalData = new FormData();
+          Object.entries(formData).forEach(([key, value]) => {
+            finalData.append(key, value);
+          });
+          const response = await axiosInstance.post("/feature/meal/", finalData);
 
-          set({ meals: [...get().meals, response.data] });
+          set({ meals: [...get().meals, response.data.data] });
           toastSuccess("Meal created successfully");
         } catch (error) {
           set({ error: error });
@@ -59,9 +64,13 @@ export const useMealStore = create(
       updateMeal: async (id, formData) => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.patch(`/meal/${id}/`, formData);
+          const finalData = new FormData()
+          Object.keys(formData).forEach((key) => {
+            key !== "__v" && key!=="_id" && finalData.append(key, formData[key])
+          })          
+          const response = await axiosInstance.put(`/feature/meal/${id}/`,finalData);
 
-          set({ meals: get().meals.map((meal) => (meal.id === id ? response.data : meal)) });
+          set({ meals: get().meals.map((meal) => (meal.id === id ? response.data.data : meal)) });
           toastSuccess("Meal updated successfully");
         } catch (error) {
           set({ error: error });
@@ -74,7 +83,7 @@ export const useMealStore = create(
       deleteMeal: async (id) => {
         set({ is_loading: true });
         try {
-          await axiosInstance.delete(`/meal/${id}/`);
+          await axiosInstance.delete(`/feature/meal/${id}/`);
 
           set({ meals: get().meals.filter((meal) => meal.id !== id) });
           toastSuccess("Meal deleted successfully");
@@ -91,3 +100,4 @@ export const useMealStore = create(
     }
   )
 );
+// useMealStore.getState().getMeals();

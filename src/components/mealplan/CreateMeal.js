@@ -11,7 +11,7 @@ export default function MealCreate() {
 
   const handleFormSubmit = (formData) => {
     createMeal(formData);
-    navigate('/dashboard/meals/');
+    // navigate('/dashboard/meals/');
   };
 
   return (

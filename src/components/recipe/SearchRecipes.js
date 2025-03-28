@@ -13,8 +13,7 @@ export default function SearchRecipes() {
   const tabClickHandler = (e) => {
     e.preventDefault();
     search.includes(e.target.textContent.toLowerCase()) ? setSearch(search.replace(e.target.textContent.toLowerCase(), "")) : setSearch(search + " " + e.target.textContent.toLowerCase());
-    // filters.find(filter => filter === e.target.textContent.toLowerCase()) ? setFilters([...filters.filter(filter => filter !== e.target.textContent.toLowerCase())]) : setFilters([...filters,e.target.textContent.toLowerCase()]);
-  }
+   }
 
   const ingredientTabs = useMemo(() => {
     let ingredients = filteredRecipes.map((recipe) => recipe.ingredients).flat()

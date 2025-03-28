@@ -15,8 +15,8 @@ export const useMealPlanStore = create(
       createMealPlan: async (formData) => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.post("/mealplan/", formData);
-          set({ mealPlans: [...get().mealPlans, response.data] });
+          const response = await axiosInstance.post("/planner/mealplan/", formData);
+          set({ mealPlans: [...get().mealPlans, response.data.data] });
           toastSuccess("Meal plan created successfully");
         } catch (error) {
           set({ error: error });
@@ -29,7 +29,7 @@ export const useMealPlanStore = create(
       deleteMealPlan: async (id) => {
         set({ is_loading: true });
         try {
-          await axiosInstance.delete(`/mealplan/${id}/`);
+          await axiosInstance.delete(`/planner/mealplan/${id}/`);
           set({ mealPlans: get().mealPlans.filter((mealPlan) => mealPlan.id !== id) });
           toastSuccess("Meal plan deleted successfully");
         } catch (error) {
@@ -43,8 +43,8 @@ export const useMealPlanStore = create(
       updateMealPlan: async (id, formData) => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.patch(`/mealplan/${id}/`, formData);
-          set({ mealPlans: get().mealPlans.map((mealPlan) => (mealPlan.id === id ? response.data : mealPlan)) });
+          const response = await axiosInstance.patch(`/planner/mealplan/${id}/`, formData);
+          set({ mealPlans: get().mealPlans.map((mealPlan) => (mealPlan.id === id ? response.data.data : mealPlan)) });
           toastSuccess("Meal plan updated successfully");
         } catch (error) {
           set({ error: error });
@@ -58,9 +58,9 @@ export const useMealPlanStore = create(
       getMealPlans: async () => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.get("/mealplan/");
+          const response = await axiosInstance.get("/planner/mealplans/");
 
-          set({ mealPlans: response.data.results });
+          set({ mealPlans: response.data.data });
         } catch (error) {
           set({ error: error });
         } finally {
@@ -71,9 +71,9 @@ export const useMealPlanStore = create(
       getSavedMealPlans: async () => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.get("/mealplan/saved/");
+          const response = await axiosInstance.get("/planner/mealplan/saved/");
 
-          set({ saved_mealPlans: response.data.results });
+          set({ saved_mealPlans: response.data.data });
         } catch (error) {
           set({ error: error });
         } finally {
@@ -84,9 +84,9 @@ export const useMealPlanStore = create(
       getUserMealPlans: async () => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.get("/mealplan/user/");
+          const response = await axiosInstance.get("/planner/mealplans/user/");
 
-          set({ user_mealPlans: response.data.results });
+          set({ user_mealPlans: response.data.data });
         } catch (error) {
           set({ error: error });
         } finally {
@@ -97,9 +97,9 @@ export const useMealPlanStore = create(
       getDetailMealPlan: async (id) => {
         set({ is_loading: true });
         try {
-          const response = await axiosInstance.get(`/mealplan/${id}/`);
+          const response = await axiosInstance.get(`/planner/mealplan/${id}/`);
 
-          set({ detailMealPlan: response.data });
+          set({ detailMealPlan: response.data.data });
         } catch (error) {
           set({ error: error });
         } finally {

@@ -36,7 +36,7 @@ export default function Header() {
       >
         {({ open }) => (
           <>
-            <div className="max-w-[80vw] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
                 <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
                   <div className="flex-shrink-0 flex items-center">
@@ -45,8 +45,8 @@ export default function Header() {
                     </Link>
                   </div>
                 </div>
-                <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
-                  <div className="flex items-center px-6 py-4 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
+                <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-5">
+                  <div className="flex items-center px-6 py-4 xl:max-w-3xl md:mx-auto ">
                     <SearchRecipes/>
                   </div>
                 </div>
@@ -61,7 +61,7 @@ export default function Header() {
                     )}
                   </Popover.Button>
                 </div>
-                <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4 z-[1000]">
+                <div className="hidden lg:flex lg:items-center lg:col-span-5 z-[1000] gap-2">
                   {/* <a
                     href="/"
                     className="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
@@ -71,8 +71,55 @@ export default function Header() {
                   </a> */}
 
                   {/* Profile dropdown */}
+                  
+                  {!logged_in && (
+                    <Link
+                      to="/login"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-teal-400 hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-200"
+                    >
+                      Sign in
+                    </Link>
+                  )}
+
+                  {!logged_in && (
+                    <Link
+                      to="/register"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                    >
+                      Sign Up
+                    </Link>
+                  )}
                   {logged_in && (
-                    <Menu as="div" className="flex-shrink-0 relative ml-5">
+                    <Link
+                      to="/recipe/create"
+                      className={`relative px-4 py-2 text-sm font-medium text-gray-700 transition duration-300 ease-in-out 
+             hover:text-teal-600 
+             after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-teal-600 
+             after:transition-all after:duration-300 after:ease-in-out hover:after:w-full`}
+                    >
+                      Create Recipe
+                    </Link>
+                  )}
+                  <Link
+                      to="/recipe"
+                      className={`relative px-4 py-2 text-sm font-medium text-gray-700 transition duration-300 ease-in-out 
+             hover:text-teal-600 
+             after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-teal-600 
+             after:transition-all after:duration-300 after:ease-in-out hover:after:w-full`}
+                    >
+                      Recipes
+                    </Link>
+                    <Link
+                      to="/mealPlans"
+                      className={`relative px-4 py-2 text-sm font-medium text-gray-700 transition duration-300 ease-in-out 
+             hover:text-teal-600 
+             after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-teal-600 
+             after:transition-all after:duration-300 after:ease-in-out hover:after:w-full`}
+                    >
+                      Meal Plans
+                    </Link>
+                    {logged_in && (
+                    <Menu as="div" className="flex-shrink-0 relative">
                         <Menu.Button className="bg-white rounded-full flex gap-2 items-center p-2 ring-1 ring-black/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
                           <span className="sr-only">Open user menu</span>
                           <img
@@ -124,37 +171,6 @@ export default function Header() {
                       </Transition>
                     </Menu>
                   )}
-                  {!logged_in && (
-                    <Link
-                      to="/login"
-                      className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-400 hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-200"
-                    >
-                      Sign in
-                    </Link>
-                  )}
-
-                  {!logged_in && (
-                    <Link
-                      to="/register"
-                      className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-                    >
-                      Sign Up
-                    </Link>
-                  )}
-                  {logged_in && (
-                    <Link
-                      to="/recipe/create"
-                      className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-                    >
-                      Create Recipe
-                    </Link>
-                  )}
-                  <Link
-                      to="/recipe"
-                      className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-                    >
-                      Explore Recipes
-                    </Link>
                 </div>
               </div>
             </div>
@@ -191,6 +207,13 @@ export default function Header() {
                     className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-600 hover:bg-teal-700"
                   >
                     Explore Recipes
+                  </Link>
+
+                  <Link
+                    to="/mealPlans"
+                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-600 hover:bg-teal-700"
+                  >
+                    Explore Meal Plans
                   </Link>
                 {/* {navigation.map((item) => (
                   <a

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useMealStore } from "../../zustand/useMealStore";
 import Select from "react-select";
-const MealForm = ({ editMode, handleFormSubmit, recipes = [] }) => {
+const MealForm = ({ editMode, handleFormSubmit,meal , recipes = [] }) => {
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState(meal || {
     name: "",
     proteins: "",
     carbs: "",
@@ -160,8 +160,17 @@ const MealForm = ({ editMode, handleFormSubmit, recipes = [] }) => {
                   <Select
                     name="recipe"
                     className="[&>*]:z-[1000]"
-                    value={recipes.find(recipe => recipe._id === formData.recipe)}
-                    onChange={(selectedOption) => handleFormChange({ target: { name: "recipe", value: selectedOption._id } })}
+                    value={(() => {
+                      const recipe = recipes.find(recipe => recipe._id === formData.recipe)
+                      if(recipe)
+                        return {
+                          value: recipe._id,
+                          label: recipe.title
+                        }
+                    })()}
+                    onChange={(selectedOption) => {
+                      handleFormChange({ target: { name: "recipe", value: selectedOption.value } })
+                    }}
                     options={recipes.map((recipe) => ({
                       value: recipe._id,
                       label: recipe.title
